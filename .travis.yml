@@ -1,2 +1,26 @@
-language: nix
-script: nix-build --attr python-cryptominisat
+language: python
+dist: trusty
+sudo: false
+
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+before_install:
+  - wget https://github.com/msoos/cryptominisat/archive/5.0.1.tar.gz
+  - tar xf 5.0.1.tar.gz
+  - pushd cryptominisat-5.0.1 && cmake -DENABLE_PYTHON_INTERFACE=OFF . && make && popd
+  - export CFLAGS="-Icryptominisat-5.0.1/include/"
+  - export LDFLAGS="-Lcryptominisat-5.0.1/lib/"
+  - export LD_LIBRARY_PATH="cryptominisat-5.0.1/lib"
+
+install:
+  - pip install Cython
+  - pip install .
+
+script:
+ - python setup.py test
