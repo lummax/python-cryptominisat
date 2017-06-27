@@ -1,7 +1,6 @@
-#!/usr/bin/env python3
-
-from distutils.core import setup
-from distutils.extension import Extension
+import unittest
+from setuptools import setup
+from setuptools.extension import Extension
 
 try: from Cython.Build import cythonize
 except ImportError: USE_CYTHON = False
@@ -16,6 +15,10 @@ extensions = [Extension("cryptominisat._cryptominisat",
                         extra_compile_args=["-std=c++11"],
                         extra_link_args=["-std=c++11"])]
 
+def tests():
+    test_loader = unittest.TestLoader()
+    return test_loader.discover('.')
+
 
 setup(name = "cryptominisat",
       version = "0.1-501",
@@ -24,4 +27,5 @@ setup(name = "cryptominisat",
       url = "https://github.com/lummax/python-cryptominisat",
       packages = ["cryptominisat"],
       ext_modules = cythonize(extensions) if USE_CYTHON else extensions,
-      package_data = {"cryptominisat": ["*.pyx", "*.pxd"]})
+      package_data = {"cryptominisat": ["*.pyx", "*.pxd"]},
+      test_suite='setup.tests')
