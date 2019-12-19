@@ -6,6 +6,8 @@ to [`cryptominisat5`](https://github.com/msoos/cryptominisat)
 using [`Cython`](http://cython.org/). These were started before the in-tree
 cryptominisat Python bindings got implemented.
 
+*Note*: please use the official bindings at https://github.com/msoos/cryptominisat, this is no longer maintained.
+
 Usage
 -----
 
